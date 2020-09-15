@@ -1,0 +1,51 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.page{
+  height: 100%;
+  max-height: 100vh;
+  
+}
+.navigation{
+  background-color: #343a40;
+  height: 100vh;
+  padding: 1em;
+}
+.my-brand{
+  font-size: 1.7em;
+  text-decoration: none;
+  display: block;
+  padding: 0 1em;
+  color: white;
+  border-bottom: 0.06em solid white;
+}
+.my-brand:hover{
+  text-decoration: none;
+  color: rgb(224, 223, 223);
+}
+.my-nav{
+  font-size: 1em;
+  display: block;
+  padding: 0.2em;
+  color: white;
+  width: 100%;
+}
+.my-nav li{
+  color: white;
+  padding: 0.5em;
+  font-size: 1.3em;
+  border-bottom: 0.03em solid white;
+}
+.my-nav a{
+  color: white;
+  text-decoration: none;
+}
+
+.my-nav a:hover{
+  color: rgb(202, 202, 202);
+  text-decoration: none;
+  background-color: rgb(10, 13, 14);
+}
+
