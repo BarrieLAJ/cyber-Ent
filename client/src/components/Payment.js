@@ -55,9 +55,7 @@ const Payments = (props) => {
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>LE{props.payments.reduce(({amount},b)=>(
-                                 (+amount) * b
-                                ),1)}</th>
+                            <th>LE {props.payments.reduce((a,b)=> (a + (+b.amount)),0)}</th>
                         </tr>
                         <tr>
                             <th>Total Balance</th>
@@ -67,9 +65,9 @@ const Payments = (props) => {
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>LE{props.payments.reduce(({balance},b)=>(
-                                 (+balance) * b
-                                ),1)}</th>
+                            <th>LE {props.payments.reduce((a,{balance})=>(
+                                  a + (+balance)
+                                ),0)}</th>
                         </tr>
                     </tfoot>
                 </Table>
