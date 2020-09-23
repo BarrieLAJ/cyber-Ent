@@ -30,7 +30,7 @@ const Orders = (props) => {
                                 <th>{i+1}</th>
                                 <td>{order._id}</td>
                                 <td>{order.total_cost}</td>
-                                <td>{props.products.find(product => product._id == order.product_id).name}</td>
+                                <td>{order.product.name}</td>
                                 <td>{order.quantity}</td>
                             </tr>
                         ))}

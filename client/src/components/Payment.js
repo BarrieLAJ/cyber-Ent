@@ -38,11 +38,9 @@ const Payments = (props) => {
                                 <td>{payment.amount}</td>
                                 <td>{payment.payment_type}</td>
                                 <td>{payment.balance}</td>
-                                <td>{props.products.find((product,i)=> product._id === props.orders.find((order,i)=> order._id === payment.order_id).product_id ).name + " " +
-                                    props.products.find((product,i)=> product._id === props.orders.find((order,i)=> order._id === payment.order_id).product_id ).type
-                                    }</td>
-                                <td>{props.orders.find((order,i)=> order._id === payment.order_id).quantity}</td>
-                                <td>{props.customers.find((customer,i) => payment.customer_id === customer._id ).name}</td>
+                                <td>{payment.order.product.name + " " + payment.order.product.type}</td>
+                                <td>{payment.order.quantity}</td>
+                                <td>{payment.customer.name}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -79,9 +77,6 @@ const Payments = (props) => {
 
 const mapStateToProps = (state) => ({
     payments: state.payments.payments,
-    orders: state.orders.orders,
-    customers: state.customers.customers,
-    products: state.products.products
 })
 
 

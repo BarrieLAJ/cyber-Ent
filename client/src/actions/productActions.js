@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const getProducts = () => dispatch => {
     axios
-        .get('http://localhost:4000/api/cyberEnt/product')
+        .get('http://localhost:4000/api/cyberEnt/products')
         .then(res => {
 
             dispatch({

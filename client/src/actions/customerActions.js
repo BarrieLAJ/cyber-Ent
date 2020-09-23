@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export const getCustomers = () => dispatch => {
     axios
-        .get('http://localhost:4000/api/cyberEnt/customer')
+        .get('http://localhost:4000/api/cyberEnt/customers')
         .then(res => {
             dispatch({
                 type: GET_CUSTOMERS,

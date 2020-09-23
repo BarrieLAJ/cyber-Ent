@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const getPayments = () => dispatch => {
     axios
-        .get('http://localhost:4000/api/cyberEnt/payment')
+        .get('http://localhost:4000/api/cyberEnt/payments')
         .then(res => {
             dispatch({
                 type: GET_PAYMENTS,

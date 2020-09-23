@@ -27,6 +27,7 @@ const Sales = (props) => {
     const [isOpen, setisOpen] = useState(false);
     const [modalOpen, setmodalOpen] = useState(false);
     const [quantity, setquantity] = useState(1)
+    const [total_cost, settotal_cost] = useState(0)
     const [product, setproduct] = useState(props.products[0]._id)
     const [cusname, setcusname] = useState('')
     const [cusaddress, setcusaddress] = useState('')
@@ -64,7 +65,7 @@ const Sales = (props) => {
         let orderData = {
             total_cost: (+props.products.find((currentProduct,i)=> currentProduct._id === product).unit_cost) * (+quantity),
             quantity: +quantity,
-            product_id: product
+            product: product
         }
         let customerData = {
             name: cusname,
@@ -101,10 +102,12 @@ const Sales = (props) => {
         setcusname('')
         setcusaddress('')
         setphoneNumber('')
-        setamount('')
-        setpayment_type('')
+        setamount(0)
+        setpayment_type('Cash')
         setmodalOpen(false)
         setisOpen(false)
+        settotal_cost(0)
+        setbalance(0)
     }
 
     const handleCancelPayment = () => {
@@ -113,10 +116,12 @@ const Sales = (props) => {
         setcusname('')
         setcusaddress('')
         setphoneNumber('')
-        setamount('')
-        setpayment_type('')
+        setamount(0)
+        setpayment_type('Cash')
         setmodalOpen(false)
         setisOpen(false)
+        settotal_cost(0)
+        setbalance(0)
     }
 
 
@@ -143,7 +148,10 @@ const Sales = (props) => {
         <Col md={6}>
           <FormGroup>
             <Label for="quantity">Quantity</Label>
-            <Input type="number" name="quantity" value={quantity} onChange={(e)=>setquantity(e.target.value)} id="quantity" placeholder="Quantity" />
+            <Input type="number" name="quantity" value={quantity} onChange={(e)=>{
+                setquantity(e.target.value)
+                settotal_cost((+props.products.find((currentProduct,i)=> currentProduct._id === product).unit_cost) * parseInt(e.target.value))
+            }} id="quantity" placeholder="Quantity" />
           </FormGroup>
         </Col>
       </Row>
@@ -182,7 +190,10 @@ const Sales = (props) => {
                 <Col>
                     <FormGroup>
                         <Label for="amount">Amount</Label>
-                        <Input type="text" name="amount" id="amount" value={amount} onChange={(e)=>setamount(e.target.value)} />     
+                        <Input type="text" name="amount" id="amount" value={amount} onChange={(e)=>{
+                            setamount(e.target.value)
+                            setbalance(total_cost - parseInt(e.target.value))
+                            }} />     
                     </FormGroup>
                 </Col>
                 <Col>
@@ -195,7 +206,7 @@ const Sales = (props) => {
             <Row>
                 <FormGroup>
                     <Label for="balance">Balance</Label>
-                    <Input type="text" name="balance" id="balance" value={balance} onChange={(e)=>setbalance(e.target.value)} />     
+                    <Input disabled type="text" name="balance" id="balance" value={balance} onChange={(e)=>setbalance(e.target.value)} />     
                 </FormGroup>
             </Row>
             <Row>
@@ -217,7 +228,8 @@ const Sales = (props) => {
                 <p>Payment will be made by <span>{cusname}</span></p>
                 <p>For <span>{props.products.find((currentProduct,i)=> currentProduct._id === product).name}</span>  <span>{props.products.find((currentProduct,i)=> currentProduct._id === product).type}</span>
                 </p>
-                <p>Costing LE<span>{(+props.products.find((currentProduct,i)=> currentProduct._id === product).unit_cost) * (+quantity)}</span></p>
+                <p>Payment Amount LE<span>{amount}</span></p>
+                {parseInt(balance) > 0 && <p>Balance LE<span>{balance}</span></p>}
                 <p>Paynig by {payment_type}</p>
             </ModalBody>
             <ModalFooter>

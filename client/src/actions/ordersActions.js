@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export const getOrders = () => dispatch => {
     axios
-        .get('http://localhost:4000/api/cyberEnt/order')
+        .get('http://localhost:4000/api/cyberEnt/orders')
         .then(res => {
             dispatch({
                 type: GET_ORDERS,
