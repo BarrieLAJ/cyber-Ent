@@ -11,7 +11,7 @@ const PaymentModel = require('../../models/Payment.model');
 
 
 //get
-router.get('/product',(req,res) => {
+router.get('/products',(req,res) => {
     ProductsModel.find().then(data => {
         res.send(data);
     }).catch(err => {
@@ -19,7 +19,7 @@ router.get('/product',(req,res) => {
     })
 });
 
-router.get('/customer', (req,res) => {
+router.get('/customers', (req,res) => {
     CustomerModel.find().then(data => {
         res.send(data);
     }).catch(err => {
@@ -27,7 +27,7 @@ router.get('/customer', (req,res) => {
     })
 });
 
-router.get('/payment', (req,res) => {
+router.get('/payments', (req,res) => {
     PaymentModel.find().then(data => {
         res.send(data);
     }).catch(err => {
@@ -35,7 +35,7 @@ router.get('/payment', (req,res) => {
     })
 });
 
-router.get('/order', (req,res) => { 
+router.get('/orders', (req,res) => { 
     OrderModel.find()
               .then(data => {
                     res.send(data);
@@ -86,19 +86,19 @@ router.post('/order', (req,res) => {
 
 
 //update
-router.patch('/product',(req,res) => {
+router.patch('/product/:id',(req,res) => {
     
 });
 
-router.patch('/customer', (req,res) => {
+router.patch('/customer/:id', (req,res) => {
 
 });
 
-router.patch('/payment', (req,res) => {
+router.patch('/payment/:id', (req,res) => {
     
 });
 
-router.patch('/order', (req,res) => {
+router.patch('/order/:id', (req,res) => {
 
 });
 
@@ -107,19 +107,19 @@ router.patch('/order', (req,res) => {
 // });
 
 //delete
-router.delete('/product',(req,res) => {
+router.delete('/product/:id',(req,res) => {
     
 });
 
-router.delete('/customer', (req,res) => {
+router.delete('/customer/:id', (req,res) => {
 
 });
 
-router.delete('/payment', (req,res) => {
+router.delete('/payment/:id', (req,res) => {
     
 });
 
-router.delete('/order', (req,res) => {
+router.delete('/order/:id', (req,res) => {
 
 });
 

@@ -1,8 +1,18 @@
 const mongoose = require('mongoose');
+const autoNumber = require('@safer-bwd/mongoose-autonumber')
+
 
 const Schema = mongoose.Schema
 
-const ProductSchema = new Schema({
+const ProductSchema = new Schema ( {
+    _id: {
+        type: String,
+        immutable: true,
+        maxlength: 7,
+        autonumber: {
+          prefix: () => `PDT-`,
+          addLeadingZeros: true
+    }},
     name: {
         type: String,
         required: true
@@ -19,8 +29,9 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     }
-});
+}, {timestamps: {createdAt: 'created_at'}});
 
+ProductSchema.plugin(autoNumber)
 
 //model
 const ProductsModel = mongoose.model('product', ProductSchema);
