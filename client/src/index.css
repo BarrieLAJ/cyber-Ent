@@ -9,7 +9,6 @@
   
 }
 .navigation{
-  background-color: #343a40;
   height: 100vh;
   padding: 1em;
 }
@@ -17,7 +16,7 @@
   font-size: 1.7em;
   text-decoration: none;
   display: block;
-  padding: 0 1em;
+  /* padding: 0 1em; */
   color: white;
   border-bottom: 0.06em solid white;
 }
@@ -28,7 +27,7 @@
 .my-nav{
   font-size: 1em;
   display: block;
-  padding: 0.2em;
+  /* padding: 0.2em; */
   color: white;
   width: 100%;
 }

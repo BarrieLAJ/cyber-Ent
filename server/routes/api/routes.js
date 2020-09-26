@@ -11,6 +11,13 @@ const PaymentModel = require('../../models/Payment.model');
 
 
 //get
+router.get('/customer/:id', (req,res)=>{
+    CustomerModel.findById(req.params.id).then((customer)=>{
+        res.send(customer)
+    }).catch(err => {
+        res.status(500).send({"err": err })
+    })
+});
 router.get('/products',(req,res) => {
     ProductsModel.find().then(data => {
         res.send(data);

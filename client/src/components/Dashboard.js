@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {
     Row, 
@@ -10,20 +10,14 @@ import {
     Badge,
     } from 'reactstrap'
 import { Link } from 'react-router-dom'
-import {getProducts} from '../actions/productActions'
-import {getCustomers} from '../actions/customerActions'
-import {getOrders} from '../actions/ordersActions'
-import {getPayments} from '../actions/paymentActions'
+// import {getProducts} from '../actions/productActions'
+// import {getCustomers} from '../actions/customerActions'
+// import {getOrders} from '../actions/ordersActions'
+// import {getPayments} from '../actions/paymentActions'
 
 
 const Dashboard = (props) => {
 
-    useEffect(()=>{
-        props.getProducts()
-        props.getCustomers()
-        props.getPayments()
-        props.getOrders()
-    })
 
     return (
         <div style={{padding: "1em 2em"}}>
@@ -81,9 +75,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,{
-    getProducts,
-    getPayments,
-    getCustomers,
-    getOrders
-})(Dashboard)
+export default connect(mapStateToProps)(Dashboard)

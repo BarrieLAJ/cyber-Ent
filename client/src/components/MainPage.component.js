@@ -11,7 +11,7 @@ import CustomerDetails from './CustomerDetails'
 
 export const MainPage = () => {
     return (
-        <Container style={{height: '100vh', maxHeight:'100vh', overflow: 'scroll', backgroundColor: "rgb(26, 23, 44)"}}>
+        <Container style={{height: '100vh', maxHeight:'100vh', fontSize: '15px', overflow: 'scroll'}}>
             
                 <Switch>
                     <Route path='/' exact component={Dashboard}/>

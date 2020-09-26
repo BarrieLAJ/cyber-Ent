@@ -11,7 +11,7 @@ export const NavBar = withRouter(() => {
     return (
         <div className="navigation">
         {/* <Navbar color="dark" dark expand="md"> */}
-            <Row>
+            <Row style={{paddingLeft: '0.55em', display: 'block'}}>
             <Link className='my-brand' to='/'>Cyber Ent</Link>
             </Row>
             <Row lg="">

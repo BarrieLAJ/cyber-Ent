@@ -16,9 +16,9 @@ import {
     ModalFooter} from 'reactstrap';
 
 
-import {getProducts} from '../actions/productActions'
+// import {getProducts} from '../actions/productActions'
 // import { addPayment } from '../actions/paymentActions'
-import {addCustomer, getCustomers} from '../actions/customerActions'
+import {addCustomer} from '../actions/customerActions'
 import {addOrder, getOrders} from '../actions/ordersActions'
 import {addPayment} from '../actions/addCustomerAction'
 
@@ -36,9 +36,9 @@ const Sales = (props) => {
     const [payment_type, setpayment_type] = useState("Cash")
     const [balance, setbalance] = useState(0)
 
-    useEffect(() => {
-        props.getProducts()
-    },[])
+    // useEffect(() => {
+    //     props.getProducts()
+    // },[])
 
 
 
@@ -247,11 +247,8 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-    getProducts: getProducts,
     addOrder: addOrder,
     addCustomer: addCustomer,
-    getCustomers,
-    getOrders,
-    addPayment
+    addPayment: addPayment
 })(Sales)
 

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {
     Row,
@@ -23,16 +24,18 @@ const Customers = (props) => {
                         <th>Name</th>
                         <th>Address</th>
                         <th>Phone</th>
+                        <th>View</th>
                     </thead>
                     <tbody>
-                        {props.customers.map((customer,i)=> (   
-                            <tr key={customer._id}>
-                                <th>{i+1}</th>
-                                <td>{customer._id}</td>
-                                <td>{customer.name}</td>
-                                <td>{customer.address}</td>
-                                <td>{customer.phone_number}</td>
-                            </tr>
+                        {props.customers.map((customer,i)=> (  
+                                <tr key={customer._id}>
+                                    <th>{i+1}</th>
+                                    <td>{customer._id}</td>
+                                    <td>{customer.name}</td>
+                                    <td>{customer.address}</td>
+                                    <td>{customer.phone_number}</td>
+                                    <td><Link to={`/customer/${customer._id}`}  style={{display: "block"}}>View</Link></td>
+                                </tr>
                         ))}
                     </tbody>
                 </Table>
