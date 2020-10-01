@@ -33,6 +33,10 @@ const OrderSchema = new Schema({
         ref: 'customer',
         required: true,
         autopopulate: true
+    },
+    status: {
+        type: String,
+        default: 'active'
     }
 }, {timestamps: {createdAt: 'created_at'}});
 

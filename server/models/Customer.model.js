@@ -23,6 +23,10 @@ const CustomerSchema = new Schema({
     phone_number:{
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        default: 'active'
     }
 });
 

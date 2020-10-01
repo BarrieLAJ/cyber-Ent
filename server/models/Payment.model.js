@@ -36,6 +36,10 @@ const PaymentSchema = new Schema({
         ref: 'order',
         autopopulate: true,
         required: true
+    },
+    status: {
+        type: String,
+        default: 'active'
     }
 }, {timestamps: { createdAt: 'created_at' }});
 

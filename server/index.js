@@ -18,7 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 //database connection
-mongoose.connect('mongodb://localhost/cyberEnterprise',{ useNewUrlParser: true, useUnifiedTopology: true  })
+mongoose.connect('mongodb://localhost/cyberEnterprise',{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
         .then(()=>{console.log('MongoDB Connected Successfully')})
         .catch(err => console.log("Error connection to MongoDB \n", err));
 

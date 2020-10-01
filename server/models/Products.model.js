@@ -28,8 +28,12 @@ const ProductSchema = new Schema ( {
     unit_cost:{
         type: Number,
         required: true
+    },
+    status: {
+        type: String,
+        default: 'active'
     }
-}, {timestamps: {createdAt: 'created_at'}});
+}, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}});
 
 ProductSchema.plugin(autoNumber)
 
