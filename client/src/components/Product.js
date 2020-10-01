@@ -54,6 +54,7 @@ const Product = ({products,addProduct,getProducts}) => {
                 <Button block onClick={toggle} color="warning" className="my-2">Add Products</Button>
             </Row>
             <AddProductModal open={modalOpen} setName={setname} setType={settype} setUnitCost={setUnitCost} setSize={setsize} name={name} type={type} unit_cost={unitCost} size={size} handleAddProduct={handleAddProduct} handleCancelProduct={handleCancelProduct} />
+            {products.length > 0 &&
             <Row noGutters={false} className="my-2">
                 <Table autoCapitalize="true" striped  dark borderless hover className="text-white">
                     <tr>
@@ -80,6 +81,7 @@ const Product = ({products,addProduct,getProducts}) => {
                     </tbody>
                 </Table>
             </Row>
+            }
         </div>
     )
 }

@@ -17,6 +17,7 @@ const Payments = (props) => {
         <Row>
                 <h2>Payments</h2>
         </Row>
+        {props.payments.length > 0 &&
         <Row noGutters={false}>
             <Container>
                 <Table autoCapitalize="true" striped  dark borderless hover className="text-white" >
@@ -71,6 +72,7 @@ const Payments = (props) => {
                 </Table>
                 </Container>
             </Row>
+        }
         </div>
     )
 }

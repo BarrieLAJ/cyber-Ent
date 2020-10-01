@@ -16,6 +16,7 @@ const Customers = (props) => {
         <Row>
                 <h2>Customers</h2>
         </Row>
+        {props.customers.length > 0 &&
         <Row noGutters={false}>
                 <Table autoCapitalize="true" striped  dark borderless hover className="text-white">
                     <thead>
@@ -40,6 +41,7 @@ const Customers = (props) => {
                     </tbody>
                 </Table>
             </Row>
+        }
         </div>
     )
 }
