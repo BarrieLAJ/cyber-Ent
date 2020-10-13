@@ -11,7 +11,7 @@ const Orders = (props) => {
         props.getOrders();
     })
     return (
-        <div className="text-white">
+        <div style={{padding: '0.4em'}}className="text-white">
         <Row>
                 <h2>Orders</h2>
         </Row>
@@ -39,6 +39,7 @@ const Orders = (props) => {
                 </Table>
             </Row>
         }
+        {!props.orders.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Order Yet</p>}
         </div>
     )
 }

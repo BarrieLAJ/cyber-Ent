@@ -12,7 +12,7 @@ const Customers = (props) => {
         props.getCustomers()
     },[props.customrs])
     return (
-        <div className="text-white">
+        <div style={{padding: '0.4em'}} className="text-white">
         <Row>
                 <h2>Customers</h2>
         </Row>
@@ -42,6 +42,7 @@ const Customers = (props) => {
                 </Table>
             </Row>
         }
+        {!props.customers.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Customer Yet</p>}
         </div>
     )
 }

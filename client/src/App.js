@@ -30,8 +30,8 @@ function App(props) {
         <Container fluid style={{paddingLeft: '0'}}>
           {/* <div className="App"> */}
             <Row className="">
-              <Col xs='2' className="pr-0 pl-2" style={{backgroundColor: " #343a40", flex: '0 0 20%', maxWidth: '20%'}}><NavBar /></Col>
-              <Col xs='10' className="pr-0 pl-0" style={{backgroundColor: "rgb(26, 23, 44)", flex: '0 0 80%', maxWidth: '80%'}}><MainPage /></Col>
+              <Col xs='2' className="pr-0 pl-2" style={{backgroundColor: " #343a40", flex: '0 0 15%', maxWidth: '15%'}}><NavBar /></Col>
+              <Col xs='10' className="pr-0 pl-0" style={{backgroundColor: "rgb(26, 23, 44)", flex: '0 0 85%', maxWidth: '85%'}}><MainPage /></Col>
             </Row>
           {/* </div> */}
         </Container>

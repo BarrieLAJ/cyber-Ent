@@ -46,7 +46,7 @@ const Product = ({products,addProduct,getProducts}) => {
         getProducts()
     })
     return (
-        <div style={{padding: "1em 0.5em"}} className="text-white">
+        <div style={{padding: "0.4em"}} className="text-white">
             <Row>
                 <h2>Products</h2>
             </Row>
@@ -82,6 +82,7 @@ const Product = ({products,addProduct,getProducts}) => {
                 </Table>
             </Row>
             }
+            {!products.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Product Yet</p>}
         </div>
     )
 }

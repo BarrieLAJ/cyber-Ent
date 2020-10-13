@@ -16,7 +16,7 @@ import {
     ModalFooter} from 'reactstrap';
 
 
-// import {getProducts} from '../actions/productActions'
+import {getProducts} from '../actions/productActions'
 // import { addPayment } from '../actions/paymentActions'
 import {addCustomer} from '../actions/customerActions'
 import {addOrder, getOrders} from '../actions/ordersActions'
@@ -27,8 +27,8 @@ const Sales = (props) => {
     const [isOpen, setisOpen] = useState(false);
     const [modalOpen, setmodalOpen] = useState(false);
     const [quantity, setquantity] = useState(1)
+    const [product, setproduct] = useState(props.products.length ? props.products[0]._id: "2435")
     const [total_cost, settotal_cost] = useState(0)
-    const [product, setproduct] = useState(props.products[0]._id)
     const [cusname, setcusname] = useState('')
     const [cusaddress, setcusaddress] = useState('')
     const [phoneNumber, setphoneNumber] = useState('')
@@ -36,9 +36,9 @@ const Sales = (props) => {
     const [payment_type, setpayment_type] = useState("Cash")
     const [balance, setbalance] = useState(0)
 
-    // useEffect(() => {
-    //     props.getProducts()
-    // },[])
+    useEffect(() => {
+        props.getProducts()
+    },[])
 
 
 
@@ -133,13 +133,19 @@ const Sales = (props) => {
         <Row>
             <Col xs='12'><h3 className="heading-1">Order Product</h3></Col>
         </Row>
+        {props.products.length > 0 &&
+        <div>
         <Form onSubmit={handleSubmit}>
         <Row form>
         <Col md={6}>
           <FormGroup>
             <Label for="product">Product Name Type Size</Label>
-            <Input type="select" value={product} onChange={(e)=>setproduct(e.target.value)} name="product" id="product" placeholder="product">
-                {props.products.map(({_id,name,type,size,unit_cost}) =>{
+            <Input type="select" value={product} onChange={(e)=>{
+                setproduct(e.target.value)
+                settotal_cost((+props.products.find((currentProduct,i)=> currentProduct._id === e.target.value).unit_cost) * parseInt(quantity))
+                // setbalance(total_cost - amount)
+            }} name="product" id="product" placeholder="product">
+                {props.products.map(({_id,name,type,size}) =>{
                     return(<option key={_id} value={_id}> {name + ' ' + type + ' ' + size}</option>)
                 })}
             </Input>
@@ -151,13 +157,14 @@ const Sales = (props) => {
             <Input type="number" name="quantity" value={quantity} onChange={(e)=>{
                 setquantity(e.target.value)
                 settotal_cost((+props.products.find((currentProduct,i)=> currentProduct._id === product).unit_cost) * parseInt(e.target.value))
+                // setbalance(total_cost-amount)
             }} id="quantity" placeholder="Quantity" />
           </FormGroup>
         </Col>
       </Row>
       <Button color="primary" style={{ marginBottom: '1rem' }}> {isOpen ? "Close Order" : "Order"}</Button>
     </Form>
-        
+    
 
       <Collapse isOpen={isOpen}>
         <Row>
@@ -206,7 +213,7 @@ const Sales = (props) => {
             <Row>
                 <FormGroup>
                     <Label for="balance">Balance</Label>
-                    <Input disabled type="text" name="balance" id="balance" value={balance} onChange={(e)=>setbalance(e.target.value)} />     
+                    <Input disabled type="text" name="balance" id="balance" value={balance} />     
                 </FormGroup>
             </Row>
             <Row>
@@ -237,6 +244,8 @@ const Sales = (props) => {
             </ModalFooter>
         </Modal>
       </Collapse>
+      </div>
+        }
         </div>
     )
 }
@@ -247,6 +256,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
+    getProducts,
     addOrder: addOrder,
     addCustomer: addCustomer,
     addPayment: addPayment
