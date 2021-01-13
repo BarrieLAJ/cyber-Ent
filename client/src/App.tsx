@@ -8,10 +8,10 @@ import {BrowserRouter} from 'react-router-dom'
 import  { NavBar }  from './components/NavBar.component'
 import {MainPage} from './components/MainPage.component'
 
-import {getProducts} from './actions/productActions'
-import {getOrders} from './actions/ordersActions'
-import {getCustomers} from './actions/customerActions'
-import {getPayments} from './actions/paymentActions'
+import {getProducts} from './pages/product/productRedux/productActions'
+import {getOrders} from './pages/order/orderRedux/ordersActions'
+import {getCustomers} from './pages/customer/customerRedux/customerActions'
+import {getPayments} from './pages/payment/paymentRedux/paymentActions'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'

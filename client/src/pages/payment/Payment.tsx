@@ -6,7 +6,7 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 
-import {getPayments} from '../actions/paymentActions'
+import {getPayments} from '../payment/paymentRedux/paymentActions'
 
 const Payments = (props) => {
     useEffect(()=>{

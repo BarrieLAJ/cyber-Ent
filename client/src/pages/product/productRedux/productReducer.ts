@@ -3,13 +3,18 @@ import {
   ADD_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
-} from "../actions/actions";
+} from "./actiontypes";
 
-const initstate = {
+import {ProductReducerInterface} from '../productInterface'
+import {ProductActionType} from './actiontypes'
+
+const initstate: ProductReducerInterface = {
   products: [],
+  error: false,
+  loading: false
 };
 
-export default (state = initstate, action) => {
+export default (state = initstate, action:ProductActionType): ProductReducerInterface => {
   switch (action.type) {
     case GET_PRODUCTS:
       return {
@@ -29,7 +34,7 @@ export default (state = initstate, action) => {
         ),
       };
     case UPDATE_PRODUCT:
-      let productToBeUpdated = state.product.findIndex(
+      let productToBeUpdated = state.products.findIndex(
         (product) => product._id === action.payload._id
       );
       let newProducts = [...state.products];

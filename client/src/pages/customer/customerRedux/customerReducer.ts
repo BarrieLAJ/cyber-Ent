@@ -3,13 +3,21 @@ import {
   ADD_CUSTOMER,
   UPDATE_CUSTOMER,
   DELETE_CUSTOMER,
-} from "../actions/actions";
+  CustomerActionType
+} from "./actiontypes";
 
-const initstate = {
+
+import {CustomerReducerState}  from '../customerinterface'
+
+
+
+const initstate : CustomerReducerState = {
   customers: [],
+  loading: false,
+  error: false
 };
 
-export default (state = initstate, action) => {
+export default (state = initstate, action: CustomerActionType): CustomerReducerState => {
   switch (action.type) {
     case GET_CUSTOMERS:
       return {

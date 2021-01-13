@@ -30,7 +30,7 @@ const Dashboard = (props) => {
                 <Col>
                 <Card body outline color="primary">
                     <CardTitle>Product</CardTitle>
-                    <h3><Badge color="primary">{props.products.length}</Badge></h3>
+                    <h3><Badge color="primary">{props.products.filter(p => p.status === 'active').length}</Badge></h3>
                     <Link to="/products" style={{display: "block", color: 'none', textDecoration: "none" }}><Button color="primary">Products</Button></Link>
                 </Card> 
                 </Col>

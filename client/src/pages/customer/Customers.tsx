@@ -5,7 +5,7 @@ import {
     Row,
     Table
 } from 'reactstrap'
-import { getCustomers } from '../actions/customerActions'
+import { getCustomers } from './customerRedux/customerActions'
 
 const Customers = (props) => {
     useEffect(()=>{

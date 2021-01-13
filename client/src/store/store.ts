@@ -16,7 +16,7 @@ const initialState = {}
 //     initialState,
 //     compose(applyMiddleware(thunk))
 //     )
-const store = createStore(
+export const store = createStore(
     rootReducer,
     initialState,
     compose(applyMiddleware(thunk))
@@ -24,4 +24,4 @@ const store = createStore(
 
 
 
-export default store
+export type AppStoreInterFace = ReturnType <typeof rootReducer>

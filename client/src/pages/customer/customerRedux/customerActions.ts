@@ -3,10 +3,21 @@ import {
   DELETE_CUSTOMER,
   ADD_CUSTOMER,
   GET_CUSTOMERS,
-} from "./actions";
+  CustomerActionType,
+} from "./actiontypes";
+
+import { Action } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppStoreInterFace } from "../../../store/store";
+
 import axios from "axios";
 
-export const getCustomers = () => (dispatch) => {
+export const getCustomers = (): ThunkAction<
+  void,
+  AppStoreInterFace,
+  unknown,
+  Action<CustomerActionType["type"]>
+> => (dispatch) => {
   axios.get("http://localhost:4000/api/cyberEnt/customers").then((res) => {
     dispatch({
       type: GET_CUSTOMERS,
@@ -15,7 +26,12 @@ export const getCustomers = () => (dispatch) => {
   });
 };
 
-export const addCustomer = (customer) => (dispatch) => {
+export const addCustomer: ThunkAction<
+  void,
+  AppStoreInterFace,
+  unknown,
+  Action<CustomerActionType["type"]>
+> = (customer) => (dispatch) => {
   axios
     .post("http://localhost:4000/api/cyberEnt/customer", customer)
     .then((res) => {
@@ -26,7 +42,12 @@ export const addCustomer = (customer) => (dispatch) => {
     });
 };
 
-export const updateCustomer = (_id, customer) => (dispatch) => {
+export const updateCustomer: ThunkAction<
+  void,
+  AppStoreInterFace,
+  unknown,
+  Action<CustomerActionType["type"]>
+> = (_id, customer) => (dispatch) => {
   axios
     .patch(`http://localhost:4000/api/cyberEnt/customer/${_id}`, customer)
     .then((res) => {
@@ -37,7 +58,12 @@ export const updateCustomer = (_id, customer) => (dispatch) => {
     });
 };
 
-export const deleteCustomers = (_id) => (dispatch) => {
+export const deleteCustomers: ThunkAction<
+  void,
+  AppStoreInterFace,
+  unknown,
+  Action<CustomerActionType["type"]>
+> = (_id) => (dispatch) => {
   axios
     .delete(`http://localhost:4000/api/cyberEnt/customer/${_id}`)
     .then((res) => {

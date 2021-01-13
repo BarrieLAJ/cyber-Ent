@@ -4,7 +4,7 @@ import {
     Row,
     Table
 } from 'reactstrap'
-import {getOrders} from '../actions/ordersActions'
+import {getOrders} from './orderRedux/ordersActions'
 
 const Orders = (props) => {
     useEffect(()=>{

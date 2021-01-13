@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container, Row, Col, Button } from "reactstrap";
-import { getCustomers } from "../actions/customerActions";
-import { getProducts } from "../actions/productActions";
-import { getOrders } from "../actions/ordersActions";
-import { getPayments } from "../actions/paymentActions";
-import { addPayment } from "../actions/addCustomerAction";
+import { getCustomers } from "./customerRedux/customerActions";
+import { getProducts } from "../product/productRedux/productActions";
+import { getOrders } from "../order/orderRedux/ordersActions";
+import { getPayments } from "../payment/paymentRedux/paymentActions";
+import { addPayment } from "../../actions/addCustomerAction";
 import axios from "axios";
+
+//interface
+import { Customer } from './customerinterface'
 
 const CustomerDetails = (props) => {
   // console.log(props.match.params.id)
-  const [customer, setcustomer] = useState({});
+  const [customer, setcustomer] = useState<Customer | null>();
 
   const getCustomer = (id) => {
     axios

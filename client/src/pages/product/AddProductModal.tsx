@@ -1,7 +1,24 @@
 import React from 'react'
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Row, FormGroup, Label, Button} from 'reactstrap'
 
-const AddProductModal = (props) => {
+interface Props {
+    open: boolean;
+    name: string;
+    unit_cost: string;
+    type: string;
+    size: string;
+    toggle(): void;
+    setName(event: any): void;
+    setType(event: any): void;
+    setSize(event: any): void;
+    setUnitCost(event: any): void;
+    handleAddProduct(): void;
+    handleCancelProduct(): void;
+
+
+}
+
+const AddProductModal = (props: Props) => {
     return (
         <Modal isOpen={props.open} toggle={props.toggle} >
             <ModalHeader>

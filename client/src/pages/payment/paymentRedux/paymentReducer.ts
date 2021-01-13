@@ -3,13 +3,15 @@ import {
   ADD_PAYMENT,
   DELETE_PAYMENT,
   UPDATE_PAYMENT,
-} from "../actions/actions";
+} from "../../../actions/actions";
+import { PaymentReducerInterface } from "../paymentInterface";
+import { PaymentActionType } from "./actiontypes";
 
-const initstate = {
+const initstate: PaymentReducerInterface = {
   payments: [],
 };
 
-export default (state = initstate, action) => {
+export default (state = initstate, action: PaymentActionType): PaymentReducerInterface => {
   switch (action.type) {
     case GET_PAYMENTS:
       return {

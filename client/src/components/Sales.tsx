@@ -16,17 +16,17 @@ import {
     ModalFooter} from 'reactstrap';
 
 
-import {getProducts} from '../actions/productActions'
+import {getProducts} from '../pages/product/productRedux/productActions'
 // import { addPayment } from '../actions/paymentActions'
-import {addCustomer} from '../actions/customerActions'
-import {addOrder, getOrders} from '../actions/ordersActions'
+import {addCustomer} from '../pages/customer/customerRedux/customerActions'
+import {addOrder, getOrders} from '../pages/order/orderRedux/ordersActions'
 import {addPayment} from '../actions/addCustomerAction'
 
 
 const Sales = (props) => {
     const [isOpen, setisOpen] = useState(false);
     const [modalOpen, setmodalOpen] = useState(false);
-    const [quantity, setquantity] = useState(1)
+    const [quantity, setquantity] = useState<number>(1)
     const [product, setproduct] = useState(props.products.length ? props.products[0]._id: "2435")
     const [total_cost, settotal_cost] = useState(0)
     const [cusname, setcusname] = useState('')
@@ -142,7 +142,7 @@ const Sales = (props) => {
             <Label for="product">Product Name Type Size</Label>
             <Input type="select" value={product} onChange={(e)=>{
                 setproduct(e.target.value)
-                settotal_cost((+props.products.find((currentProduct,i)=> currentProduct._id === e.target.value).unit_cost) * parseInt(quantity))
+                settotal_cost((+props.products.find((currentProduct,i)=> currentProduct._id === e.target.value).unit_cost) * (+quantity))
                 // setbalance(total_cost - amount)
             }} name="product" id="product" placeholder="product">
                 {props.products.map(({_id,name,type,size}) =>{
@@ -236,7 +236,7 @@ const Sales = (props) => {
                 <p>For <span>{props.products.find((currentProduct,i)=> currentProduct._id === product).name}</span>  <span>{props.products.find((currentProduct,i)=> currentProduct._id === product).type}</span>
                 </p>
                 <p>Payment Amount LE<span>{amount}</span></p>
-                {parseInt(balance) > 0 && <p>Balance LE<span>{balance}</span></p>}
+                {+balance > 0 && <p>Balance LE<span>{balance}</span></p>}
                 <p>Paynig by {payment_type}</p>
             </ModalBody>
             <ModalFooter>

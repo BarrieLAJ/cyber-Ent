@@ -3,13 +3,18 @@ import {
   ADD_ORDER,
   UPDATE_ORDER,
   DELETE_ORDER,
-} from "../actions/actions";
+  OrderActionType
+} from "./actiontype";
 
-const initstate = {
+import {OrderReducerinterface} from '../orderinterface'
+
+const initstate: OrderReducerinterface = {
   orders: [],
+  error: false,
+  loading: false
 };
 
-export default (state = initstate, action) => {
+export default (state = initstate, action: OrderActionType): OrderReducerinterface => {
   switch (action.type) {
     case GET_ORDERS:
       return {
