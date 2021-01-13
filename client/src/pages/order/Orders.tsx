@@ -1,21 +1,26 @@
 import React, {useEffect} from 'react'
-import {connect} from 'react-redux'
+import {connect, useDispatch, useSelector} from 'react-redux'
 import {
     Row,
     Table
 } from 'reactstrap'
 import {getOrders} from './orderRedux/ordersActions'
+import { loadStateSelector, ordersSelector } from './orderRedux/orderSelectors'
 
 const Orders = (props) => {
+    const dispatch = useDispatch()
+    const orders = useSelector(ordersSelector)
+    const loadState = useSelector(loadStateSelector)
     useEffect(()=>{
-        props.getOrders();
-    })
+        dispatch(getOrders())
+    },[])
     return (
         <div style={{padding: '0.4em'}}className="text-white">
         <Row>
                 <h2>Orders</h2>
         </Row>
-        {props.orders.length > 0 &&
+        {loadState && <Row><h1>Loading...</h1></Row>}
+        {orders.length > 0 &&
         <Row noGutters={false}>
                 <Table autoCapitalize="true" striped  dark borderless hover className="text-white">
                     <thead>
@@ -26,7 +31,7 @@ const Orders = (props) => {
                         <th>Quantity</th>
                     </thead>
                     <tbody>
-                        {props.orders.map((order,i) => (
+                        {orders.map((order,i) => (
                             <tr key={order._id}>
                                 <th>{i+1}</th>
                                 <td>{order._id}</td>
@@ -39,17 +44,11 @@ const Orders = (props) => {
                 </Table>
             </Row>
         }
-        {!props.orders.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Order Yet</p>}
+        {!orders.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Order Yet</p>}
         </div>
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        orders: state.orders.orders,
-        products: state.products.products
-    }
-}
 
 
-export default connect(mapStateToProps, {getOrders})(Orders)
+export default Orders

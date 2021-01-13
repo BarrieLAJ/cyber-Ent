@@ -9,7 +9,7 @@ export const UPDATE_PAYMENT = 'UPDATE_PAYMENT'
 
 interface Update {
     _id: Payment['_id'];
-    payload: Payment
+    payment: Payment
 }
 
 interface GetPaymentInterface {

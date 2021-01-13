@@ -13,7 +13,7 @@ import {CustomerReducerState}  from '../customerinterface'
 
 const initstate : CustomerReducerState = {
   customers: [],
-  loading: false,
+  loading: true,
   error: false
 };
 
@@ -23,6 +23,7 @@ export default (state = initstate, action: CustomerActionType): CustomerReducerS
       return {
         ...state,
         customers: action.payload,
+        loading: false
       };
     case ADD_CUSTOMER:
       return {

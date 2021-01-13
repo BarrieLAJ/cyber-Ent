@@ -4,20 +4,31 @@ import {
     Container,
     Table
 } from 'reactstrap'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {getPayments} from '../payment/paymentRedux/paymentActions'
+import { paymentsSelector } from '../customer/customerSelectors'
+import { loadStateSelector, totalAmoutselector, totalBalanceSelector } from './paymentSelectors'
 
 const Payments = (props) => {
+
+    const dispatch = useDispatch()
+    const payments = useSelector(paymentsSelector)
+    const totalAmount = useSelector(totalAmoutselector)
+    const totalBalance = useSelector(totalBalanceSelector)
+    const loadState = useSelector(loadStateSelector)
+
+
     useEffect(()=>{
-        props.getPayments()
-    },[props.payments])
+        dispatch(getPayments())
+    },[])
     return (
         <div style={{padding: '0.4em'}} className="text-white">
         <Row>
                 <h2>Payments</h2>
         </Row>
-        {props.payments.length > 0 &&
+        {loadState && <Row><h1>Loading...</h1></Row>}
+        {payments.length > 0 &&
         <Row noGutters={false}>
             <Container>
                 <Table autoCapitalize="true" striped  dark borderless hover className="text-white" >
@@ -32,7 +43,7 @@ const Payments = (props) => {
                         <th>Customer Name</th>
                     </tr>
                     <tbody>
-                        {props.payments.map((payment,i)=> (
+                        {payments.map((payment,i)=> (
                             <tr key={payment._id}>
                                 <th>{i+1}</th>
                                 <td>{payment._id}</td>
@@ -54,7 +65,7 @@ const Payments = (props) => {
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>LE {props.payments.reduce((a,b)=> (a + (+b.amount)),0)}</th>
+                            <th>LE {totalAmount}</th>
                         </tr>
                         <tr>
                             <th>Total Balance</th>
@@ -64,23 +75,18 @@ const Payments = (props) => {
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>LE {props.payments.reduce((a,{balance})=>(
-                                  a + (+balance)
-                                ),0)}</th>
+                            <th>LE {totalBalance}</th>
                         </tr>
                     </tfoot>
                 </Table>
                 </Container>
             </Row>
         }
-        {!props.payments.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Payment Yet</p>}
+        {!payments.length && <p style={{margin: '0 auto', textAlign: 'center'}}>No Payment Yet</p>}
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
-    payments: state.payments.payments,
-})
 
 
-export default connect(mapStateToProps, {getPayments})(Payments)
+export default Payments

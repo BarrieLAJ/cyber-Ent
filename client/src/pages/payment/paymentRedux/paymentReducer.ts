@@ -9,6 +9,8 @@ import { PaymentActionType } from "./actiontypes";
 
 const initstate: PaymentReducerInterface = {
   payments: [],
+  loading: true,
+  error: false
 };
 
 export default (state = initstate, action: PaymentActionType): PaymentReducerInterface => {
@@ -17,6 +19,7 @@ export default (state = initstate, action: PaymentActionType): PaymentReducerInt
       return {
         ...state,
         payments: action.payload,
+        loading: false
       };
     case ADD_PAYMENT:
       return {
@@ -26,7 +29,9 @@ export default (state = initstate, action: PaymentActionType): PaymentReducerInt
     case DELETE_PAYMENT:
       return {
         ...state,
-        payments: [...state.payments, action.payload],
+        payments: state.payments.filter(
+          (payment) => payment._id !== action.payload
+        )
       };
     case UPDATE_PAYMENT:
       let paymentToBeUpdated = state.payments.findIndex(

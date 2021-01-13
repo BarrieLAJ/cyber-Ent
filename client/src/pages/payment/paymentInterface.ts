@@ -10,4 +10,6 @@ export interface Payment {
 
 export interface PaymentReducerInterface {
  payments: Payment[]
+ loading: boolean
+ error: boolean
 }

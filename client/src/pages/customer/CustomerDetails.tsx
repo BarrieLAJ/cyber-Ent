@@ -1,5 +1,5 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, {  useEffect, useState } from "react";
+import { useDispatch,connect, useSelector } from "react-redux";
 import { Container, Row, Col, Button } from "reactstrap";
 import { getCustomers } from "./customerRedux/customerActions";
 import { getProducts } from "../product/productRedux/productActions";
@@ -8,24 +8,40 @@ import { getPayments } from "../payment/paymentRedux/paymentActions";
 import { addPayment } from "../../actions/addCustomerAction";
 import axios from "axios";
 
+
+import {
+    getCustomerId,
+    loadStateSelector,
+    cuspaymentFilter,
+    customersSelector,
+    customerSelector,
+    ordersSelector,
+    ordersCount,
+    cusPaymentAriasFilter
+} from './customerSelectors'
 //interface
 import { Customer } from './customerinterface'
 
 const CustomerDetails = (props) => {
   // console.log(props.match.params.id)
-  const [customer, setcustomer] = useState<Customer | null>();
+  //const [customer, setcustomer] = useState<Customer | null>();
+  const dispatch = useDispatch()
+  const customer = useSelector(state => customerSelector(state,props))
+  const isLoading = useSelector(loadStateSelector)
+  const orderCount = useSelector(state => ordersCount(state, props))
+  const paymentMade = useSelector(state => cuspaymentFilter(state,props))
+  const paymentArias = useSelector(state => cusPaymentAriasFilter(state,props))
 
   const getCustomer = (id) => {
     axios
       .get(`http://localhost:4000/api/cyberEnt/customer/${id}`)
       .then((result) => {
-        setcustomer(result.data);
+        //setcustomer(result.data);
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
-    getCustomer(props.match.params.id);
+    //getCustomer(props.match.params.id);
     // props.getCustomers()
     // props.getProducts()
     // props.getOrders()
@@ -34,7 +50,7 @@ const CustomerDetails = (props) => {
 
   const completePayment = (_id, amount) => {};
 
-  return props.customers.length > 0 ? (
+  return isLoading === false ? (
     <Container className="text-white my-3 a-auto" style={{fontSize: '14px'}}>
       <div className="m-3">
         <Row>
@@ -53,17 +69,19 @@ const CustomerDetails = (props) => {
           <Col>{customer.phone_number}</Col>
           <Col>
             {
-              props.orders.filter(
-                (order) => customer._id === order.customer._id
-              ).length
+              // props.orders.filter(
+              //   (order) => customer._id === order.customer._id
+              // ).length
+              orderCount
             }
           </Col>
           <Col>
-            {
+            {/* {
               props.payments.filter(
                 (payment) => customer._id === payment.customer._id
               ).length
-            }
+            } */
+            paymentMade.length}
           </Col>
         </Row>
       </div>
@@ -71,8 +89,7 @@ const CustomerDetails = (props) => {
         <Row>
           <h2>Payments Made</h2>
         </Row>
-        {props.payments
-          .filter((payment) => customer._id === payment.customer._id)
+        {paymentMade
           .map((payment, i) => {
             return (
               <Row key={payment._id}>
@@ -99,12 +116,8 @@ const CustomerDetails = (props) => {
           </Col>
         </Row>
       </div>
-      {props.payments
-        .filter((payment) => customer._id === payment.customer._id)
-        .filter((payment) => payment.balance >= 1).length != 0 ? (
-        props.payments
-          .filter((payment) => customer._id === payment.customer._id)
-          .filter((payment) => payment.balance >= 1)
+      {paymentArias.length != 0 ? (
+        paymentArias
           .map((payment, i) => {
             return (
               <Row key={payment._id}>
@@ -126,23 +139,24 @@ const CustomerDetails = (props) => {
       )}
     </Container>
   ) : (
-    <Container className="m-auto text-white">No Customers yet</Container>
+    <Container className="m-auto text-white">Loading</Container>
   );
 };
 
 const mapStateToProps = (state) => ({
-  customers: state.customers.customers,
-  products: state.products.products,
-  orders: state.orders.orders,
-  payments: state.payments.payments,
+  //customers: state.customers.customers,
+  //products: state.products.products,
+  //orders: state.orders.orders,
+  //payments: state.payments.payments,
 });
 
-const mapDispatchToProps = {
-  getCustomers,
-  getOrders,
-  getProducts,
-  getPayments,
-  addPayment,
-};
+// const mapDispatchToProps = {
+//   getCustomers,
+//   getOrders,
+//   getProducts,
+//   getPayments,
+//   addPayment,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomerDetails);
+// export default connect(mapStateToProps, mapDispatchToProps)(CustomerDetails);
+export default CustomerDetails

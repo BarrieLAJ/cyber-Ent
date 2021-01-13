@@ -1,11 +1,13 @@
 import React, { useState, useEffect, ReactNode } from 'react'
-import {connect} from 'react-redux'
+import {connect, useDispatch, useSelector} from 'react-redux'
 import {
     Row,
     Button,
     Table,
     }   from 'reactstrap'
 import AddProductModal from './AddProductModal'
+
+import {activeProductSelector, loadStateSelector} from './productSelectors'
 
 import {addProduct, getProducts, deleteProduct, updateProduct} from './productRedux/productActions'
 import DeleteModal from '../../components/DeleteModal'
@@ -14,7 +16,7 @@ import DeleteModal from '../../components/DeleteModal'
 // const Product1  = (props: {type: number}) => {
 //    const {type} = props;
 // }
-const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) => {
+const Product = (props) => {
     const [modalOpen, setmodalOpen] = useState(false)
     const [name, setname] = useState("")
     const [type, settype] = useState('')
@@ -22,6 +24,9 @@ const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) 
     const [size, setsize] = useState('')
     const [isOpen, setisOpen] = useState(false)
     const [product_id, setproduct_id] = useState<string | null>(null)
+    const products = useSelector(activeProductSelector)
+    const loadState = useSelector(loadStateSelector)
+    const dispatch = useDispatch()
 
     const toggle = () => {
         setmodalOpen(!modalOpen)
@@ -31,19 +36,19 @@ const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) 
         setisOpen(!isOpen)
     } 
 
-    const handleDeleteProduct = (_id) => {
-        deleteProduct(_id)
+    const handleDeleteProduct = async (_id) => {
+        await dispatch(deleteProduct(_id))
         setisOpen(false)
     }
 
-    const handleAddProduct = () => {
+    const handleAddProduct = async () => {
         let newProduct = {
             name,
             type,
             unit_cost: parseInt(unitCost),
             size
         }
-        addProduct(newProduct)
+        await dispatch(addProduct(newProduct))
         setmodalOpen(false)
         setname('')
         settype('')
@@ -59,8 +64,8 @@ const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) 
     }
 
     useEffect(()=>{
-        getProducts()
-    })
+        dispatch(getProducts())
+    },[])
     return (
         <div style={{padding: "0.4em"}} className="text-white">
             <DeleteModal isOpen={isOpen} name='Product' id={product_id} handleDelete={handleDeleteProduct} toggle={toggleDeleteModal} />
@@ -71,6 +76,11 @@ const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) 
                 <Button block onClick={toggle} color="warning" className="my-2">Add Products</Button>
             </Row>
             <AddProductModal open={modalOpen} toggle = {toggle} setName={setname} setType={settype} setUnitCost={setUnitCost} setSize={setsize} name={name} type={type} unit_cost={unitCost} size={size} handleAddProduct={handleAddProduct} handleCancelProduct={handleCancelProduct} />
+            {loadState == true && 
+            <Row>
+                <h1>Loading...</h1>
+            </Row>
+            }
             {products.length > 0 &&
             <Row noGutters={false} className="my-2">
                 <Table autoCapitalize="true" striped  dark borderless hover className="text-white">
@@ -84,7 +94,7 @@ const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) 
                         <th>Actions</th>
                     </tr>
                     <tbody>
-                        {products.filter((product) => product.status !== 'deleted').map((product, i) =>{
+                        {products.map((product, i) =>{
                             return (
                                 <tr key={product._id}>
                                     <th>{i+1}</th>
@@ -116,17 +126,21 @@ const Product = ({products,addProduct,getProducts,deleteProduct,updateProduct}) 
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        products: state.products.products
-    }
-}
+// const mapStateToProps = (state) => {
+//     return {
+//         //products: state.products.products
+//         loadState: loadStateSelector(state),
+//         // products: activeProductSelector(state),
+//     }
+// }
 
 
 
-export default connect(mapStateToProps, {
-    getProducts: getProducts,
-    addProduct: addProduct,
-    deleteProduct : deleteProduct,
-    updateProduct: updateProduct
-})(Product)
+// export default connect(mapStateToProps, {
+//     getProducts: getProducts,
+//     addProduct: addProduct,
+//     deleteProduct : deleteProduct,
+//     updateProduct: updateProduct
+// })(Product)
+
+export default Product

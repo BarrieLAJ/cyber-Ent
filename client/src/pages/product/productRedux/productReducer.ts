@@ -11,7 +11,7 @@ import {ProductActionType} from './actiontypes'
 const initstate: ProductReducerInterface = {
   products: [],
   error: false,
-  loading: false
+  loading: true
 };
 
 export default (state = initstate, action:ProductActionType): ProductReducerInterface => {
@@ -20,6 +20,7 @@ export default (state = initstate, action:ProductActionType): ProductReducerInte
       return {
         ...state,
         products: action.payload,
+        loading: false
       };
     case ADD_PRODUCT:
       return {

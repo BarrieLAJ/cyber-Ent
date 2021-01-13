@@ -11,7 +11,7 @@ import {OrderReducerinterface} from '../orderinterface'
 const initstate: OrderReducerinterface = {
   orders: [],
   error: false,
-  loading: false
+  loading: true
 };
 
 export default (state = initstate, action: OrderActionType): OrderReducerinterface => {
@@ -20,6 +20,7 @@ export default (state = initstate, action: OrderActionType): OrderReducerinterfa
       return {
         ...state,
         orders: action.payload,
+        loading: false
       };
     case ADD_ORDER:
       return {

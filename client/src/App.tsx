@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {connect} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { Container,  Col, Row} from 'reactstrap'
 import {BrowserRouter} from 'react-router-dom'
 
@@ -16,13 +16,13 @@ import {getPayments} from './pages/payment/paymentRedux/paymentActions'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
-function App(props) {
-
+function App() {
+  const dispatch = useDispatch()
   useEffect( () => {
-        props.getProducts()
-        props.getCustomers()
-        props.getPayments()
-        props.getOrders()
+        dispatch(getProducts())
+        dispatch(getCustomers())
+        dispatch(getPayments())
+        dispatch(getOrders())
   },[])
   return (
     
@@ -40,9 +40,4 @@ function App(props) {
   );
 }
 
-export default connect(null, {
-  getProducts,
-  getOrders,
-  getCustomers,
-  getPayments
-})(App);
+export default App
