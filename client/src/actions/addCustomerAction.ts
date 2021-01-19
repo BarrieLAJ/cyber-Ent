@@ -1,18 +1,26 @@
-import {ADD_ORDER, ADD_CUSTOMER, ADD_PAYMENT } from "./actions"
 import axios from 'axios'
 import { addOrder } from "../pages/order/orderRedux/orderSlice"
 import { Order } from "../pages/order/orderinterface"
 import { Customer } from "../pages/customer/customerinterface"
 import { Payment } from "../pages/payment/paymentInterface"
+import { addtheCustomer } from "../pages/customer/customerRedux/customerSlice"
+import { addthePayment } from "../pages/payment/paymentRedux/paymentSlice"
+import { AppStoreInterFace } from "../store/store"
+import { ThunkAction } from "redux-thunk"
+import { Action } from "redux"
 
 
 
-export const addPayment = (order: Order,customer: Customer, payment: Payment) => dispatch => {
+export const addPayment = (order: Order,customer: Customer, payment: Payment): ThunkAction<
+void,
+AppStoreInterFace,
+unknown,
+Action<string>> => dispatch => {
     axios
         .post('http://localhost:4000/api/cyberEnt/customer', customer)
         .then(res => {
             dispatch({
-                type: ADD_CUSTOMER,
+                type: addtheCustomer.type,
                 payload: res.data
             })
             return res.data._id
@@ -33,7 +41,7 @@ export const addPayment = (order: Order,customer: Customer, payment: Payment) =>
                         .post('http://localhost:4000/api/cyberEnt/payment', newPayment)
                         .then(res => {
                             dispatch({
-                                type: ADD_PAYMENT,
+                                type: addthePayment.type,
                                 payload: res.data
                             })
                         })
