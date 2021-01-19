@@ -9,7 +9,7 @@ import  { NavBar }  from './components/NavBar.component'
 import {MainPage} from './components/MainPage.component'
 
 import {getProducts} from './pages/product/productRedux/productActions'
-import {getOrders} from './pages/order/orderRedux/ordersActions'
+import {gettheOrders} from './pages/order/orderRedux/ordersActions'
 import {getCustomers} from './pages/customer/customerRedux/customerActions'
 import {getPayments} from './pages/payment/paymentRedux/paymentActions'
 
@@ -22,7 +22,7 @@ function App() {
         dispatch(getProducts())
         dispatch(getCustomers())
         dispatch(getPayments())
-        dispatch(getOrders())
+        dispatch(gettheOrders())
   },[])
   return (
     

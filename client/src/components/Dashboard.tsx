@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import {connect, useSelector} from 'react-redux'
 import {
     Row, 
     Col, 
@@ -10,14 +10,14 @@ import {
     Badge,
     } from 'reactstrap'
 import { Link } from 'react-router-dom'
-// import {getProducts} from '../actions/productActions'
-// import {getCustomers} from '../actions/customerActions'
-// import {getOrders} from '../actions/ordersActions'
-// import {getPayments} from '../actions/paymentActions'
+import { activeProductSelector } from '../pages/product/productSelectors'
 
 
 const Dashboard = (props) => {
-
+    const products = useSelector(state => activeProductSelector(state))
+    const orders = useSelector(state => state.orders.orders)
+    const customers = useSelector(state => state.customers.customers)
+    const payments = useSelector(state => state.payments.payments)
 
     return (
         <div style={{padding: "1em 2em"}}>
@@ -30,28 +30,28 @@ const Dashboard = (props) => {
                 <Col>
                 <Card body outline color="primary">
                     <CardTitle>Product</CardTitle>
-                    <h3><Badge color="primary">{props.products.filter(p => p.status === 'active').length}</Badge></h3>
+                    <h3><Badge color="primary">{products.length}</Badge></h3>
                     <Link to="/products" style={{display: "block", color: 'none', textDecoration: "none" }}><Button color="primary">Products</Button></Link>
                 </Card> 
                 </Col>
                 <Col>
                 <Card body outline color="warning">
                     <CardTitle>Customers</CardTitle>
-                    <h3><Badge color="warning">{props.customers.length}</Badge></h3>
+                    <h3><Badge color="warning">{customers.length}</Badge></h3>
                     <Link to="/customers" style={{display: "block", color: 'none', textDecoration: "none" }}><Button color="warning">Customers</Button></Link>
                 </Card> 
                 </Col>
                 <Col>
                 <Card body outline color="dark">
                     <CardTitle>Orders</CardTitle>
-                    <h3><Badge color="dark">{props.orders.length}</Badge></h3>
+                    <h3><Badge color="dark">{orders.length}</Badge></h3>
                     <Link to="/orders" style={{display: "block", color: 'none', textDecoration: "none" }}><Button color="dark">Orders</Button></Link>
                 </Card> 
                 </Col>
                 <Col>
                 <Card body outline color="success">
                     <CardTitle>Payments</CardTitle>
-                    <h3><Badge color="success">{props.payments.length}</Badge></h3>
+                    <h3><Badge color="success">{payments.length}</Badge></h3>
                     <Link to="/payments" style={{display: "block", color: 'none', textDecoration: "none" }}><Button color="success">Payments</Button></Link>
                 </Card> 
                 </Col>
@@ -66,13 +66,5 @@ const Dashboard = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        products: state.products.products,
-        payments: state.payments.payments,
-        customers: state.customers.customers,
-        orders: state.orders.orders
-    }
-}
 
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard

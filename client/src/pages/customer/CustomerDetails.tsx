@@ -1,11 +1,10 @@
 import React, {  useEffect, useState } from "react";
 import { useDispatch,connect, useSelector } from "react-redux";
 import { Container, Row, Col, Button } from "reactstrap";
-import { getCustomers } from "./customerRedux/customerActions";
-import { getProducts } from "../product/productRedux/productActions";
-import { getOrders } from "../order/orderRedux/ordersActions";
-import { getPayments } from "../payment/paymentRedux/paymentActions";
-import { addPayment } from "../../actions/addCustomerAction";
+// import { getCustomers } from "./customerRedux/customerActions";
+// import { getProducts } from "../product/productRedux/productActions";
+// import { gettheOrders } from "../order/orderRedux/ordersActions";
+import { getPayments, updatePayment } from "../payment/paymentRedux/paymentActions";
 import axios from "axios";
 
 
@@ -21,6 +20,7 @@ import {
 } from './customerSelectors'
 //interface
 import { Customer } from './customerinterface'
+import { Payment } from "../payment/paymentInterface";
 
 const CustomerDetails = (props) => {
   // console.log(props.match.params.id)
@@ -32,23 +32,15 @@ const CustomerDetails = (props) => {
   const paymentMade = useSelector(state => cuspaymentFilter(state,props))
   const paymentArias = useSelector(state => cusPaymentAriasFilter(state,props))
 
-  const getCustomer = (id) => {
-    axios
-      .get(`http://localhost:4000/api/cyberEnt/customer/${id}`)
-      .then((result) => {
-        //setcustomer(result.data);
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    //getCustomer(props.match.params.id);
-    // props.getCustomers()
-    // props.getProducts()
-    // props.getOrders()
-    // props.getPayments()
-  }, []);
 
-  const completePayment = (_id, amount) => {};
+  const completePayment = (_id: Payment['_id'], amount: Payment['balance'], payment: Payment) => {
+    let newPayment = {
+      ...payment,
+      amount: payment.amount + amount,
+      balance: 0
+    } as Payment
+    dispatch(updatePayment(_id,newPayment))
+  };
 
   return isLoading === false ? (
     <Container className="text-white my-3 a-auto" style={{fontSize: '14px'}}>
@@ -90,7 +82,7 @@ const CustomerDetails = (props) => {
           <h2>Payments Made</h2>
         </Row>
         {paymentMade
-          .map((payment, i) => {
+          .map((payment: Payment, i: number) => {
             return (
               <Row key={payment._id}>
                 <Col>{payment.order.product.name}</Col>
@@ -118,7 +110,7 @@ const CustomerDetails = (props) => {
       </div>
       {paymentArias.length != 0 ? (
         paymentArias
-          .map((payment, i) => {
+          .map((payment: Payment, i: number) => {
             return (
               <Row key={payment._id}>
                 <Col>{payment.order.product.name}</Col>
@@ -127,7 +119,7 @@ const CustomerDetails = (props) => {
                 <Col>Le {payment.balance}</Col>
                 <Col>{new Date(payment.created_at).toDateString()}</Col>
                 <Col>
-                  <Button color="success" onClick={completePayment(12, 200)}>
+                  <Button color="success" onClick={()=>completePayment(payment._id, payment.balance, payment)}>
                     Complete
                   </Button>
                 </Col>
@@ -143,20 +135,8 @@ const CustomerDetails = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  //customers: state.customers.customers,
-  //products: state.products.products,
-  //orders: state.orders.orders,
-  //payments: state.payments.payments,
-});
 
-// const mapDispatchToProps = {
-//   getCustomers,
-//   getOrders,
-//   getProducts,
-//   getPayments,
-//   addPayment,
-// };
+
 
 // export default connect(mapStateToProps, mapDispatchToProps)(CustomerDetails);
 export default CustomerDetails

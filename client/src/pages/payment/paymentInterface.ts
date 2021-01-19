@@ -1,7 +1,7 @@
 export interface Payment {
-    _id: string
+    _id?: string
     amount: number
-    balance: string
+    balance: number
     payment_type: string
     customer?:  string
     order?: string

@@ -1,10 +1,6 @@
-import {
-  GET_PRODUCTS,
-  ADD_PRODUCT,
-  UPDATE_PRODUCT,
-  DELETE_PRODUCT,
-  ProductActionType,
-} from "./actiontypes";
+import {gettheProducts,addtheProduct,updatetheProduct,deletetheProduct} from './productSlice'
+
+
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppStoreInterFace } from "../../../store/store";
@@ -17,29 +13,29 @@ export const getProducts = (): ThunkAction<
   void,
   AppStoreInterFace,
   unknown,
-  Action<ProductActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.get(`${url}s`).then((res) => {
     dispatch({
-      type: GET_PRODUCTS,
+      type: gettheProducts.type,
       payload: res.data,
     });
   });
 };
 
 export const addProduct = (
-  product
+  product: Product
 ): ThunkAction<
   void,
   AppStoreInterFace,
   unknown,
-  Action<ProductActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios
     .post(url, product)
     .then((res) => {
       dispatch({
-        type: ADD_PRODUCT,
+        type: addtheProduct.type,
         payload: res.data,
       });
     })
@@ -53,11 +49,11 @@ export const updateProduct = (
   void,
   AppStoreInterFace,
   unknown,
-  Action<ProductActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.patch(`${url}/${_id}`, product).then((res) => {
     dispatch({
-      type: UPDATE_PRODUCT,
+      type: updatetheProduct.type,
       payload: { product: res.data, _id },
     });
   });
@@ -69,11 +65,11 @@ export const deleteProduct = (
   void,
   AppStoreInterFace,
   unknown,
-  Action<ProductActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.delete(`${url}/${_id}`).then((res) => {
     dispatch({
-      type: DELETE_PRODUCT,
+      type: deletetheProduct.type,
       payload: res.data._id,
     });
   });

@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux'
-import productReducer from '../pages/product/productRedux/productReducer'
-import paymentReducer from '../pages/payment/paymentRedux/paymentReducer'
-import ordersReducer from '../pages/order/orderRedux/ordersReducer'
-import customerReducer from '../pages/customer/customerRedux/customerReducer'
+import {combineReducers} from '@reduxjs/toolkit'
+import productReducer from '../pages/product/productRedux/productSlice'
+import paymentReducer from '../pages/payment/paymentRedux/paymentSlice'
+import ordersReducer from '../pages/order/orderRedux/orderSlice'
+import customerReducer from '../pages/customer/customerRedux/customerSlice'
 
 
 

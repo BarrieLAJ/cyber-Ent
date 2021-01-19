@@ -1,9 +1,13 @@
 import {ADD_ORDER, ADD_CUSTOMER, ADD_PAYMENT } from "./actions"
 import axios from 'axios'
+import { addOrder } from "../pages/order/orderRedux/orderSlice"
+import { Order } from "../pages/order/orderinterface"
+import { Customer } from "../pages/customer/customerinterface"
+import { Payment } from "../pages/payment/paymentInterface"
 
 
 
-export const addPayment = (order,customer,payment) => dispatch => {
+export const addPayment = (order: Order,customer: Customer, payment: Payment) => dispatch => {
     axios
         .post('http://localhost:4000/api/cyberEnt/customer', customer)
         .then(res => {
@@ -18,7 +22,7 @@ export const addPayment = (order,customer,payment) => dispatch => {
                 .post('http://localhost:4000/api/cyberEnt/order',newOrder)
                 .then(res => {
                     dispatch({
-                        type: ADD_ORDER,
+                        type: addOrder.type,
                         payload: res.data
                     })
 

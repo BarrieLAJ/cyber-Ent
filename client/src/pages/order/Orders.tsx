@@ -1,18 +1,19 @@
 import React, {useEffect} from 'react'
-import {connect, useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import {
     Row,
     Table
 } from 'reactstrap'
-import {getOrders} from './orderRedux/ordersActions'
+import { Order } from './orderinterface'
+import {gettheOrders} from './orderRedux/ordersActions'
 import { loadStateSelector, ordersSelector } from './orderRedux/orderSelectors'
 
-const Orders = (props) => {
+const Orders = () => {
     const dispatch = useDispatch()
     const orders = useSelector(ordersSelector)
     const loadState = useSelector(loadStateSelector)
     useEffect(()=>{
-        dispatch(getOrders())
+        dispatch(gettheOrders())
     },[])
     return (
         <div style={{padding: '0.4em'}}className="text-white">
@@ -31,7 +32,7 @@ const Orders = (props) => {
                         <th>Quantity</th>
                     </thead>
                     <tbody>
-                        {orders.map((order,i) => (
+                        {orders.map((order: Order,i: number) => (
                             <tr key={order._id}>
                                 <th>{i+1}</th>
                                 <td>{order._id}</td>

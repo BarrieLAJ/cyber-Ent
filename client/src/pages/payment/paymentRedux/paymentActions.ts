@@ -6,6 +6,8 @@ import {
   PaymentActionType,
 } from "./actiontypes";
 
+import {getthePayments,addthePayment,updatethePayment,deletethePayment} from './paymentSlice'
+
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppStoreInterFace } from "../../../store/store";
@@ -19,11 +21,11 @@ export const getPayments = (): ThunkAction<
   void,
   AppStoreInterFace,
   unknown,
-  Action<PaymentActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.get(`${url}s`).then((res) => {
     dispatch({
-      type: GET_PAYMENTS,
+      type: getthePayments.type,
       payload: res.data,
     });
   });
@@ -35,11 +37,11 @@ export const addPayment = (
   void,
   AppStoreInterFace,
   unknown,
-  Action<PaymentActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.post(url, payment).then((res) => {
     dispatch({
-      type: ADD_PAYMENT,
+      type: addthePayment.type,
       payload: res.data,
     });
   });
@@ -52,11 +54,11 @@ export const updatePayment = (
   void,
   AppStoreInterFace,
   unknown,
-  Action<PaymentActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.patch(`${url}/${_id}`, payment).then((res) => {
     dispatch({
-      type: UPDATE_PAYMENT,
+      type: updatethePayment.type,
       payload: { payment: res.data, _id },
     });
   });
@@ -68,11 +70,11 @@ export const deletePayment = (
   void,
   AppStoreInterFace,
   unknown,
-  Action<PaymentActionType["type"]>
+  Action<string>
 > => (dispatch) => {
   axios.delete(`${url}/${_id}`).then((res) => {
     dispatch({
-      type: DELETE_PAYMENT,
+      type: deletethePayment.type,
       payload: res.data._id,
     });
   });
