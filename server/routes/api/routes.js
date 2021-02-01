@@ -70,7 +70,7 @@ router.post("/product", (req, res) => {
       res.json(product);
     })
     .catch((err) => {
-      res.status(500).send({ err: err });
+      res.send({ err: err });
     });
 });
 
