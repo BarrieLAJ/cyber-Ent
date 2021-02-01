@@ -1,10 +1,3 @@
-import {
-  GET_PAYMENTS,
-  ADD_PAYMENT,
-  DELETE_PAYMENT,
-  UPDATE_PAYMENT,
-  PaymentActionType,
-} from "./actiontypes";
 
 import {getthePayments,addthePayment,updatethePayment,deletethePayment} from './paymentSlice'
 
@@ -12,10 +5,8 @@ import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { AppStoreInterFace } from "../../../store/store";
 
-import axios from "axios";
 import { Payment } from "../paymentInterface";
-
-const url = "http://localhost:4000/api/cyberEnt/payment";
+import HttpC from "../../../httpClients";
 
 export const getPayments = (): ThunkAction<
   void,
@@ -23,7 +14,7 @@ export const getPayments = (): ThunkAction<
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios.get(`${url}s`).then((res) => {
+  HttpC.get({url: `/payments`}).then((res) => {
     dispatch({
       type: getthePayments.type,
       payload: res.data,
@@ -39,7 +30,7 @@ export const addPayment = (
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios.post(url, payment).then((res) => {
+  HttpC.post({url: '/payment', body: payment}).then((res) => {
     dispatch({
       type: addthePayment.type,
       payload: res.data,
@@ -56,7 +47,7 @@ export const updatePayment = (
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios.patch(`${url}/${_id}`, payment).then((res) => {
+  HttpC.patch({url: `/payment/${_id}`, body: payment}).then((res) => {
     dispatch({
       type: updatethePayment.type,
       payload: { payment: res.data, _id },
@@ -72,10 +63,10 @@ export const deletePayment = (
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios.delete(`${url}/${_id}`).then((res) => {
+  HttpC.delete({url: `/payment/${_id}`}).then((res) => {
     dispatch({
       type: deletethePayment.type,
-      payload: res.data._id,
+      payload: _id,
     });
   });
 };

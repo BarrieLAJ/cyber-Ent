@@ -8,6 +8,7 @@ import { addthePayment } from "../pages/payment/paymentRedux/paymentSlice"
 import { AppStoreInterFace } from "../store/store"
 import { ThunkAction } from "redux-thunk"
 import { Action } from "redux"
+import HttpC from '../httpClients'
 
 
 
@@ -16,8 +17,8 @@ void,
 AppStoreInterFace,
 unknown,
 Action<string>> => dispatch => {
-    axios
-        .post('http://localhost:4000/api/cyberEnt/customer', customer)
+    HttpC
+        .post({url: '/customer', data: customer})
         .then(res => {
             dispatch({
                 type: addtheCustomer.type,
@@ -26,8 +27,8 @@ Action<string>> => dispatch => {
             return res.data._id
         }).then((customer_id)=> {
                 let newOrder = {...order, customer: customer_id}
-                axios
-                .post('http://localhost:4000/api/cyberEnt/order',newOrder)
+                HttpC
+                .post({url: '/order', data: newOrder})
                 .then(res => {
                     dispatch({
                         type: addOrder.type,
@@ -37,8 +38,8 @@ Action<string>> => dispatch => {
                     return  res.data._id
                 }).then((order_id)=> {
                     let newPayment = {...payment, order: order_id, customer: customer_id}
-                    axios
-                        .post('http://localhost:4000/api/cyberEnt/payment', newPayment)
+                    HttpC
+                        .post({url: '/payment', data: newPayment})
                         .then(res => {
                             dispatch({
                                 type: addthePayment.type,
@@ -46,6 +47,6 @@ Action<string>> => dispatch => {
                             })
                         })
                 })
-                })
+                }).catch(err => console.log(err))
 }
 

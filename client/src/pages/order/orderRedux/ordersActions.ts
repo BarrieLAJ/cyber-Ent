@@ -1,11 +1,3 @@
-// import {
-//   GET_ORDERS,
-//   ADD_ORDER,
-//   UPDATE_ORDER,
-//   DELETE_ORDER,
-//   OrderActionType,
-// } from "./actiontype";
-
 import {addOrder,getOrders,deleteOrder,updateOrder} from './orderSlice'
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
@@ -13,6 +5,7 @@ import { AppStoreInterFace } from "../../../store/store";
 
 import axios from "axios";
 import { Order } from "../orderinterface";
+import HttpC from '../../../httpClients';
 
 export const gettheOrders = (): ThunkAction<
   void,
@@ -20,7 +13,7 @@ export const gettheOrders = (): ThunkAction<
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios.get("http://localhost:4000/api/cyberEnt/orders").then((res) => {
+  HttpC.get({url: '/orders'}).then((res) => {
     dispatch({
       type: getOrders.type,
       payload: res.data,
@@ -36,7 +29,7 @@ export const addtheOrder = (
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios.post("http://localhost:4000/api/cyberEnt/order", order).then((res) => {
+  HttpC.post({url: "/order", body: order}).then((res) => {
     dispatch({
       type: addOrder.type,
       payload: res.data,
@@ -53,8 +46,8 @@ export const updatetheOrder = (
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios
-    .patch(`http://localhost:4000/api/cyberEnt/order/${_id}`, order)
+  HttpC
+    .patch({url: `/order/${_id}`, body: order})
     .then((res) => {
       dispatch({
         type: updateOrder.type,
@@ -71,12 +64,12 @@ export const deletetheOrder = (
   unknown,
   Action<string>
 > => (dispatch) => {
-  axios
-    .delete(`http://localhost:4000/api/cyberEnt/order/${_id}`)
+  HttpC
+    .delete({url: `/order/${_id}`})
     .then((res) => {
       dispatch({
         type: deleteOrder.type,
-        payload: res.data._id,
+        payload: _id,
       });
     });
 };

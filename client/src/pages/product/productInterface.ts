@@ -1,4 +1,4 @@
-export interface Product {
+export default interface Product {
     status?: string
     _id?:string
     name:string

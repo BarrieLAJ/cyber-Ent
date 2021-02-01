@@ -1,14 +1,15 @@
 import { createSelector } from "reselect";
+import Product from "./productInterface";
 
 
-const productsSelector = state => state.products.products
+const productsSelector = (state: { products: { products: any; }; }) => state.products.products
 
-const loadStateSelector = state => state.products.loading
+const loadStateSelector = (state: { products: { loading: any; }; }) => state.products.loading
 
 
 const activeProductSelector = createSelector(
     productsSelector,
-    products => products.filter(product => product.status !== "deleted")
+    products => products.filter((product: Product) => product.status !== "deleted")
     )
 
 // const loadingStateSelector = createSelector(

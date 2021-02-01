@@ -11,19 +11,20 @@ import {activeProductSelector, loadStateSelector} from './productSelectors'
 
 import {addProduct, getProducts, deleteProduct, updateProduct} from './productRedux/productActions'
 import DeleteModal from '../../components/DeleteModal'
+import ProductInterface from './productInterface'
 
 
 // const Product1  = (props: {type: number}) => {
 //    const {type} = props;
 // }
-const Product = (props) => {
+const Product = () => {
     const [modalOpen, setmodalOpen] = useState(false)
     const [name, setname] = useState("")
     const [type, settype] = useState('')
     const [unitCost, setUnitCost] = useState('')
     const [size, setsize] = useState('')
     const [isOpen, setisOpen] = useState(false)
-    const [product_id, setproduct_id] = useState<string | null>(null)
+    const [product_id, setproduct_id] = useState<string | any>()
     const products = useSelector(activeProductSelector)
     const loadState = useSelector(loadStateSelector)
     const dispatch = useDispatch()
@@ -36,19 +37,19 @@ const Product = (props) => {
         setisOpen(!isOpen)
     } 
 
-    const handleDeleteProduct = async (_id) => {
+    const handleDeleteProduct = async (_id: string | undefined) => {
         await dispatch(deleteProduct(_id))
         setisOpen(false)
     }
 
-    const handleAddProduct = async () => {
+    const handleAddProduct = () => {
         let newProduct = {
             name,
             type,
             unit_cost: parseInt(unitCost),
-            size
+            size,
         }
-        await dispatch(addProduct(newProduct))
+        dispatch(addProduct(newProduct))
         setmodalOpen(false)
         setname('')
         settype('')
@@ -94,7 +95,7 @@ const Product = (props) => {
                         <th>Actions</th>
                     </tr>
                     <tbody>
-                        {products.map((product, i) =>{
+                        {products.map((product:ProductInterface, i: number) =>{
                             return (
                                 <tr key={product._id}>
                                     <th>{i+1}</th>
